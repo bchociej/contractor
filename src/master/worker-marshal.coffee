@@ -12,7 +12,7 @@ packer = require '../function-packer/'
 module.exports = class WorkerMarshal
 	constructor: (opts = {}) ->
 		opts.wd ?= __dirname
-		opts.cargoPayload ?= 16
+		opts.cargoPayload ?= 64
 
 		workerModule = path.resolve __dirname, '../worker/'
 
