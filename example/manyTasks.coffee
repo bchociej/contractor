@@ -4,9 +4,10 @@ Promise    = require 'bluebird'
 c = new Contractor
 
 combine = (first, last) ->
-	Promise.resolve "The name is: #{last}, #{first}"
+	Promise.resolve "The name's #{last}. #{first} #{last}."
 
 names = [
+	['James', 'Bond']
 	['John', 'Smith']
 	['George', 'Washington']
 	['Ringo', 'Starr']
