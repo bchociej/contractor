@@ -95,7 +95,7 @@ module.exports = class LRUMap
 		iter = @_map.values()
 
 		return {
-			next: -> iter.next().value?.value
+			next: -> {value: iter.next().value?.value}
 		}
 
 	entries: ->
@@ -106,9 +106,9 @@ module.exports = class LRUMap
 				entry = iter.next().value
 
 				if entry?
-					return [entry[0], entry[1].value]
+					return {value: [entry[0], entry[1].value]}
 				else
-					return undefined
+					return {}
 		}
 
 	forEach: (callback, thisArg) ->
