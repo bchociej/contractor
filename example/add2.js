@@ -17,5 +17,5 @@ c.doWork(add2, [5]).then(function(result) { console.log(result); });
 
 // error example, 1 second later
 setTimeout(function() {
-	c.doWork(add2, ['hi mom']).catch(function(error) { console.error(error); });
+	c.doWork(add2, ['hi mom']).catch(function(error) { console.trace(error); });
 }, 1000);

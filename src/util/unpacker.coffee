@@ -18,7 +18,7 @@ module.exports = class Unpacker
 			for k, v in scopeInjections
 				this[k] = v
 
-			eval "var reconstituted = #{packed.fnString}"
+			eval "var reconstituted = #{fnString}"
 			return reconstituted
 
 		unless typeof fn is 'function'

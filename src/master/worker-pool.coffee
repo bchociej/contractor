@@ -4,7 +4,7 @@ WorkerMarshal = require './worker-marshal'
 module.exports = class WorkerPool
 	dispatchWorkersIfPossible = (ds, ws) ->
 		while ds.length > 0 and ws.length > 0
-			ds.pop().resolve(ws.pop())
+			ds.shift().resolve(ws.shift())
 
 	constructor: (@size, @requirePath) ->
 		@deferreds = []

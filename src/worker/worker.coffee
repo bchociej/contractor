@@ -21,16 +21,29 @@ module.exports = class Worker
 			async.each tasks, (task, tcb) ->
 				workFn = unpacker.unpack task.workFn, scopeInjections
 
-				Promise.resolve(workFn(task.args...))
+				Promise.resolve().then -> workFn(task.args...)
 				.then (result) ->
 					process.send
-						taskId: task.id
+						id: task.id
 						resolve: result
 
 					tcb()
 				.catch (error) ->
 					process.send
-						taskId: task.id
-						reject: error
+						id: task.id
+						reject:
+							if error instanceof Error
+								{
+									isError: true
+									error:
+										message: error.message
+										stack: error.stack
+										name: error.name
+								}
+							else
+								{
+									isError: false
+									value: error
+								}
 
 					tcb()
