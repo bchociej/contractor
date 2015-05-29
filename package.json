@@ -1,5 +1,5 @@
 {
-  "name": "contractor",
+  "name": "cluster-contractor",
   "version": "0.0.1",
   "description": "cluster work API as promised",
   "main": "index.js",
