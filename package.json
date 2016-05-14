@@ -1,6 +1,6 @@
 {
   "name": "cluster-contractor",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "cluster work API as promised",
   "main": "index.js",
   "scripts": {
@@ -9,11 +9,7 @@
   "author": "Ben Chociej <ben@chociej.io>",
   "license": "Apache-2.0",
   "dependencies": {
-    "async": "^1.0.0",
-    "bluebird": "^2.9.26",
-    "coffee-script": "^1.9.2",
-    "es6-map": "^0.1.1",
-    "lru-cache": "^2.6.4",
-    "node-uuid": "^1.4.3"
+    "bluebird": "^3.3.5",
+    "coffee-script": "^1.10.0"
   }
 }
