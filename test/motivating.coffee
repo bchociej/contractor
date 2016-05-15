@@ -14,7 +14,7 @@ c = new Contractor {workers: 8}
 addSync = (a, b) -> a + b
 
 # callback example
-addCb = (a, b, cb) -> cb(a + b)
+addCb = (a, b, cb) -> cb(null, a + b)
 
 # Promise example
 addProm = (a, b) -> Promise.resolve().then -> a + b
@@ -38,7 +38,7 @@ c.ready()
 
 
 # using a callback-style work function
-c.dispatch addCb, 10, -1	# the callback is injected automatically
+c.dispatch addCb, 10, -1, c.wrapback()
 .then (sum) -> assert.equal sum, 9
 
 
@@ -50,3 +50,13 @@ c.dispatch addProm, 4, 7
 # with a convenient wrapper
 wrappedAdd = c.wrap add
 wrappedAdd(1, 2).then (sum) -> assert.equal sum, 3
+
+
+# even wrap callback-style
+wrappedAdd = c.wrap addCb
+wrappedAdd(1, 2, c.wrapback()).then (sum) -> assert.equal sum, 3
+
+
+# or consume the result in a callback
+c.dispatch(addSync, 2, 3)
+.asCallback (err, sum) -> assert.equal sum, 5
