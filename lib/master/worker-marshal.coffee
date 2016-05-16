@@ -9,7 +9,7 @@ WrapbackMagic = require './wrapback-magic'
 module.exports = class WorkerMarshal extends EventEmitter
 	constructor: (requirePath) ->
 		requirePath ?= process.cwd()
-		workerModule = path.resolve __dirname, './worker/index.js'
+		workerModule = path.resolve __dirname, '../worker/index.js'
 
 		forkOpts =
 			cwd: process.cwd()
@@ -30,10 +30,18 @@ module.exports = class WorkerMarshal extends EventEmitter
 				when 'work:resolve'
 					@_inflightWork[msg.id]?.resolve msg.value
 					delete @_inflightWork[msg.id]
+					@emit 'taskFinished'
 
 				when 'work:reject'
 					@_inflightWork[msg.id]?.reject msg.reason
 					delete @_inflightWork[msg.id]
+					@emit 'taskFinished'
+
+				when 'worker:idle'
+					@emit 'idle'
+
+				when 'worker:queuing'
+					@emit 'saturated'
 
 	ready: -> @_ready
 

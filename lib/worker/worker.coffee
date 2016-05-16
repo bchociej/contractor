@@ -1,21 +1,27 @@
 execute = require './execute'
+Monitor = require '../util/work-queue'
 
-process.send type: 'worker:startup'
+workqueue = new WorkQueue
+workqueue.on 'idle', -> process.send type: 'worker:idle'
+workqueue.on 'queuing', -> process.send type: 'worker:queuing'
 
 process.on 'message', (msg) ->
 	switch msg.type
 		when 'work'
-			execute(msg.workFn, msg.args, msg.wrapback)
-			.then (value) ->
-				process.send {
-					type: 'work:resolve'
-					id: msg.id
-					value
-				}
+			workqueue.add ->
+				execute(msg.workFn, msg.args, msg.wrapback)
+				.then (value) ->
+					process.send {
+						type: 'work:resolve'
+						id: msg.id
+						value
+					}
 
-			.catch (reason) ->
-				process.send {
-					type: 'work:reject'
-					id: msg.id
-					reason
-				}
+				.catch (reason) ->
+					process.send {
+						type: 'work:reject'
+						id: msg.id
+						reason
+					}
+
+process.send type: 'worker:startup'

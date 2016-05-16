@@ -1,5 +1,5 @@
-WorkerPool = require './worker-pool'
-WrapbackMagic = require './wrapback-magic'
+WorkerPool = require './master/worker-pool'
+WrapbackMagic = require './master/wrapback-magic'
 
 defaultOpts = {}
 
