@@ -1,5 +1,7 @@
 Promise = require 'bluebird'
+async = require 'async'
 
+# todo async priority queue
 module.exports = class Scheduler
 	constructor: (@nodes) ->
 		@idle = @nodes.slice()

@@ -37,12 +37,6 @@ module.exports = class WorkerMarshal extends EventEmitter
 					delete @_inflightWork[msg.id]
 					@emit 'taskFinished'
 
-				when 'worker:idle'
-					@emit 'idle'
-
-				when 'worker:queuing'
-					@emit 'saturated'
-
 	ready: -> @_ready
 
 	dispatch: (fn, args) ->
